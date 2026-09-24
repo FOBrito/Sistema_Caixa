@@ -1,0 +1,274 @@
+/* ============================================================
+   css/style.css
+   CSS GLOBAL — carregado uma única vez em index.php.
+   Contém variáveis e componentes reutilizados por TODOS os módulos
+   (home, caixa, barracas): layout, card, botões, formulário, mensagens.
+
+   Cada módulo tem seu próprio modules/{modulo}/css/style.css apenas
+   para estilos ESPECÍFICOS daquele módulo.
+   ============================================================ */
+
+:root {
+    --cor-primaria: #0056b3;
+    --cor-primaria-hover: #004494;
+    --cor-secundaria: #e2e6ea;
+    --cor-secundaria-hover: #dae0e5;
+    --texto-escuro: #333;
+    --texto-claro: #666;
+    --fundo-tela: #f8f9fa;
+    --fundo-card: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--fundo-tela);
+    color: var(--texto-escuro);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Leve deslocamento para cima: o conjunto (cabeçalho + card) fica
+       centralizado, mas essa margem extra embaixo "empurra" tudo um
+       pouco acima do centro exato da tela. */
+    padding-bottom: 8vh;
+}
+
+/* Cabeçalho persistente (brasão + nome da paróquia).
+   Fica fora da <div id="app">, então continua visível em qualquer
+   módulo, mesmo trocando de tela via AJAX. */
+.topo-app {
+    text-align: center;
+    padding: 10px 20px 0;
+}
+
+.brasao-topo {
+    max-width: 90px;
+    width: 100%;
+    height: auto;
+}
+
+.topo-subtitulo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--texto-claro);
+    margin-top: 6px;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+}
+
+.card {
+    background: var(--fundo-card);
+    padding: 30px 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.card header {
+    margin-bottom: 25px;
+}
+
+.card h1 {
+    font-size: 1.4rem;
+    color: var(--cor-primaria);
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: var(--texto-claro);
+}
+
+/* Controle dos Passos (Steps), usado por qualquer módulo com fluxo em etapas */
+.passo {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.passo.ativo {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+}
+
+.input-bloqueado {
+    background-color: #f1f3f5;
+    color: #495057;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+
+/* Leitor de Câmera (QR Code) */
+.leitor-qr {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 2px solid var(--cor-secundaria);
+}
+
+/* Botões */
+.btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primario {
+    background: var(--cor-primaria);
+    color: #fff;
+}
+
+.btn-primario:hover {
+    background: var(--cor-primaria-hover);
+}
+
+.btn-secundario {
+    background: var(--cor-secundaria);
+    color: var(--texto-escuro);
+}
+
+.btn-secundario:hover {
+    background: var(--cor-secundaria-hover);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-grande {
+    padding: 20px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+}
+
+.botoes-acao {
+    display: flex;
+    gap: 10px;
+}
+
+.mt-2 {
+    margin-top: 15px;
+}
+
+.mensagem {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    min-height: 20px;
+    text-align: center;
+}
+
+/* Modal "Outros" (popup) — reaproveitado pelo caixa e pelo barracas.
+   Fica escondido por padrão; o JS de cada módulo adiciona a classe
+   "aberto" pra mostrar. */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.aberto {
+    display: flex;
+}
+
+.modal-conteudo {
+    position: relative;
+    background: var(--fundo-card);
+    border-radius: 12px;
+    padding: 44px 20px 24px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.modal-conteudo .btn {
+    margin-bottom: 10px;
+}
+
+.modal-conteudo .btn:last-child {
+    margin-bottom: 0;
+}
+
+/* Botão circular "X" no canto superior direito do popup */
+.modal-fechar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--cor-secundaria);
+    color: var(--texto-escuro);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s;
+}
+
+.modal-fechar:hover {
+    background: var(--cor-secundaria-hover);
+}
